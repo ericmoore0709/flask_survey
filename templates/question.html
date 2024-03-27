@@ -1,7 +1,7 @@
 {% extend 'layout/base.html' %}
 {% block content %}
 <h1>{{title}}</h1>
-<form class="form" action="/answer">
+<form class="form" action="/answer" method="POST">
     <!-- 
         Question.question = "Have you shopped here before?"
         Question.choices = ["Yes", "No"]
