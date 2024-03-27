@@ -1,0 +1,16 @@
+{% extend 'layout/base.html' %}
+{% block content %}
+<h1>{{title}}</h1>
+<form class="form" action="/answer">
+    <!-- 
+        Question.question = "Have you shopped here before?"
+        Question.choices = ["Yes", "No"]
+        Question.allow_text = False
+    -->
+    <h2>{{question.question}}</h2>
+    {% for choice in question.choices %}
+    <input class="form-control" type="radio" name="answer" value={{choice}} />
+    {% endfor %}
+    <input type="submit" class="btn btn-primary" value="Next ->" />
+</form>
+{% endblock %}
