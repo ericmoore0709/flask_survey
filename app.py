@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from surveys import satisfaction_survey
 
 app = Flask(__name__)
@@ -17,4 +17,6 @@ def question(id: int):
 
 @app.post('/answer')
 def answer():
-    answer = request.form
+    answer = request.form['answer']
+    responses.append(answer)
+    return redirect('/questions/' + len(responses))
