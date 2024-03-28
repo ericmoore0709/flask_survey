@@ -13,10 +13,12 @@
 </head>
 
 <body>
-    {% include 'layout/fragements/header.html' %}
-    {% block content %}<h1>Default Content</h1>{% endblock %}
-    {% include 'layout/fragements/errors.html' %}
-    {% include 'layout/fragements/footer.html' %}
+    <div id="root" class="text-center">
+        {% include 'layout/fragments/header.html' %}
+        {% block content %}<h1>Default Content</h1>{% endblock %}
+        {% include 'layout/fragments/errors.html' %}
+        {% include 'layout/fragments/footer.html' %}
+    </div>
 
 
     <!-- Bootstrap JS -->
