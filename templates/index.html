@@ -1,0 +1,14 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+<h1>Index</h1>
+<p>That's right, we out here!</p>
+
+<div class="card m-auto" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">{{survey.title}}</h5>
+        <p class="card-text">{{survey.instructions}}</p>
+        <a href="/questions/0" class="btn btn-primary">Take Survey</a>
+    </div>
+</div>
+
+{% endblock %}
