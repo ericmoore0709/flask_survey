@@ -7,19 +7,19 @@ app = Flask(__name__)
 # session key
 app.secret_key = str(uuid4())
 
-# initialize response list
-responses = []
-
 
 @app.get('/')
 def index():
     session.pop('errors', default=None)
-    responses.clear()
+    session.pop('responses', default=None)
     return render_template('index.html', title='Index', survey=satisfaction_survey)
 
 
 @app.get('/questions/<int:id>')
 def question(id: int):
+
+    responses = session.get('responses', default=[])
+
     if len(responses) == len(satisfaction_survey.questions):
         return redirect('/thanks')
 
@@ -34,7 +34,7 @@ def question(id: int):
 
 @app.post('/answer')
 def answer():
-    answer = request.form.get('answer')
+    answer = request.form.get('answer', None)
 
     if not answer:
         session['errors'] = ["An answer is required."]
@@ -42,7 +42,10 @@ def answer():
 
     session.pop('errors', default=None)
 
+    responses = session.get('responses', default=[])
+
     responses.append(answer.replace('_', ' '))
+    session['responses'] = responses
     if len(responses) >= len(satisfaction_survey.questions):
         return redirect('/thanks')
     return redirect('/questions/' + str(len(responses)))
