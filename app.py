@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, flash
 from surveys import satisfaction_survey
 from uuid import uuid4
 
@@ -13,15 +13,20 @@ responses = []
 
 @app.get('/')
 def index():
+    session.pop('errors', default=None)
     responses.clear()
     return render_template('index.html', title='Index', survey=satisfaction_survey)
 
 
 @app.get('/questions/<int:id>')
 def question(id: int):
+    if len(responses) == len(satisfaction_survey.questions):
+        return redirect('/thanks')
+
     question = satisfaction_survey.questions[len(responses)]
 
     if id != len(responses):
+        flash('Invalid data access detected.', 'danger')
         return redirect('/questions/' + str(len(responses)))
 
     return render_template('question.html', title='Question ' + str(id), question=question)
@@ -36,7 +41,8 @@ def answer():
         return redirect('/questions/' + str(len(responses)))
 
     session.pop('errors', default=None)
-    responses.append(answer)
+
+    responses.append(answer.replace('_', ' '))
     if len(responses) >= len(satisfaction_survey.questions):
         return redirect('/thanks')
     return redirect('/questions/' + str(len(responses)))
@@ -44,4 +50,5 @@ def answer():
 
 @app.get('/thanks')
 def thanks():
+    session.pop('errors', default=None)
     return render_template('thanks.html')
