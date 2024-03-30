@@ -15,6 +15,12 @@ def index():
     return render_template('index.html', title='Index', survey=satisfaction_survey)
 
 
+@app.post('/start')
+def start():
+    session['responses'] = []
+    return redirect('/questions/0')
+
+
 @app.get('/questions/<int:id>')
 def question(id: int):
 
