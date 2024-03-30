@@ -9,6 +9,7 @@ responses = []
 
 @app.get('/')
 def index():
+    responses.clear()
     return render_template('index.html', title='Index', survey=satisfaction_survey)
 
 
@@ -22,4 +23,11 @@ def question(id: int):
 def answer():
     answer = request.form['answer']
     responses.append(answer)
+    if len(responses) >= len(satisfaction_survey.questions):
+        return redirect('/thanks')
     return redirect('/questions/' + str(len(responses)))
+
+
+@app.get('/thanks')
+def thanks():
+    return render_template('thanks.html')
