@@ -4,7 +4,7 @@ from surveys import satisfaction_survey
 app = Flask(__name__)
 
 # initialize response list
-responses = list[str]
+responses = []
 
 
 @app.get('/')
@@ -22,5 +22,4 @@ def question(id: int):
 def answer():
     answer = request.form['answer']
     responses.append(answer)
-    return redirect('/questions/' + len(responses))
-
+    return redirect('/questions/' + str(len(responses)))
