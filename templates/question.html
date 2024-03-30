@@ -1,0 +1,19 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+<h1>{{title}}</h1>
+<form class="form" action="/answer" method="POST">
+    <!-- 
+        Question.question = "Have you shopped here before?"
+        Question.choices = ["Yes", "No"]
+        Question.allow_text = False
+    -->
+    <h2>{{question.question}}</h2>
+    {% for choice in question.choices %}
+    <div class="w-25 mx-auto">
+        <input class="form-check-input" id={{choice}} type="radio" name="answer" value={{choice}} />
+        <label class="form-check-label" for={{choice}}>{{choice}}</label>
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary"><small>Next </small><i class="fa-solid fa-arrow-right"></i></button>
+</form>
+{% endblock %}
